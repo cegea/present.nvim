@@ -75,12 +75,29 @@ M.create_system_executor = function(program)
     return vim.split(result.stdout, "\n")
   end
 end
+local execute_shell_command = function(block)
+  -- Define el separador
+  local separator = "%s"
+  
+  -- Divide el cuerpo del bloque en palabras
+  local t = {}
+  for str in string.gmatch(block.body, "([^"..separator.."]+)") do
+    table.insert(t, str)
+  end
+
+  -- Ejecuta el comando usando vim.system
+  local result = vim.system(t, { text = true }):wait()
+
+  -- Divide la salida en líneas y retorna el resultado
+  return vim.split(result.stdout, "\n")
+end
 
 local defaults = {
   executors = {
     lua = execute_lua_code,
     javascript = M.create_system_executor("node"),
     python = M.create_system_executor("python"),
+    bash = execute_shell_command,
     rust = execute_rust_code,
   },
 }
