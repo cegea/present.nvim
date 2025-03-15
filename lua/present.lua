@@ -374,7 +374,7 @@ M.start_presentation = function(opts)
 
     local executor = options.executors[block.language]
     if not executor then
-      print("No valid executor for this language")
+      print("No valid executor for this language: ", block.language)
       return
     end
 
