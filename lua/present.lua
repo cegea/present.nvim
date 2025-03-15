@@ -122,7 +122,7 @@ local options = {
 --- Setup the plugin
 ---@param opts present.Options
 M.setup = function(opts)
-  options = vim.tbl_deep_extend("force", defaults, opts or {})
+  options = vim.tbl_deep_extend("force", defaults, options, opts or {})
 end
 
 ---@class present.Slides
